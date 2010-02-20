@@ -1,10 +1,10 @@
 package # hide from PAUSE 
-    DATest::Schema::Test2D;
+    DATest::Schema::Test6B;
    
 use base 'DBIx::Class';
     
 __PACKAGE__->load_components(qw/DeleteAction PK::Auto Core/);
-__PACKAGE__->table("test2_d");
+__PACKAGE__->table("test6_b");
 __PACKAGE__->add_columns(
   "id",
   {
@@ -16,22 +16,15 @@ __PACKAGE__->add_columns(
     data_type => "varchar",
     is_nullable => 1,
   },
-  "c",
-  {
-    data_type => "integer",
-    is_nullable => 1,
-  },
 );
 __PACKAGE__->set_primary_key('id');   
 
-__PACKAGE__->belongs_to(
-    'c' => 'DATest::Schema::Test2C', 
-    { 'foreign.id'  => 'self.c' },
+__PACKAGE__->has_many(
+    'as' => 'DATest::Schema::Test6A', 
+    { 'foreign.b'  => 'self.id' },
     { 
-        join_type       => 'left',
-        delete_action   => 'delete',
+        delete_action   => 'deleteall',
     }
 );
-
    
 1;
